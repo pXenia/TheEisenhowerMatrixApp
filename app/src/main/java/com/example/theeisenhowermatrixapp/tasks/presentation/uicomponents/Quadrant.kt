@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.theeisenhowermatrixapp.tasks.data.Task
 
 @Composable
 fun Quadrant(
@@ -27,7 +28,7 @@ fun Quadrant(
     containerColor: Color,
     title: String,
     titleColor: Color,
-    tasks: List<String>
+    tasks: List<Task>
 ) {
     Card(
         modifier = modifier,
@@ -59,8 +60,8 @@ fun Quadrant(
             ) {
                 items(tasks) { task ->
                     TaskUIItem(
-                        title = task,
-                        isDone = true,
+                        title = task.title,
+                        isDone = task.completed,
                         doneColor = titleColor,
                         onCheckedChange = {}
                     )
