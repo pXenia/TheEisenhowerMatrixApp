@@ -60,7 +60,7 @@ fun Quadrant(
             ) {
                 items(tasks) { task ->
                     TaskUIItem(
-                        title = task.title,
+                        task = task,
                         isDone = task.completed,
                         doneColor = titleColor,
                         onCheckedChange = {}

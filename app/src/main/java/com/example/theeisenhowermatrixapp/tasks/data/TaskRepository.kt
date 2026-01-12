@@ -22,4 +22,30 @@ class TaskRepository @Inject constructor(
             Result.failure(e)
         }
     }
+
+    suspend fun createTask(request: CreateTaskRequest): Result<Task> {
+        return try {
+            Result.success(toDoAPI.createTask(request))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun deleteTask(id: Int): Result<Unit> {
+        return try {
+            toDoAPI.deleteTask(id)
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun changeStatus(id: Int): Result<Unit> {
+        return try {
+            toDoAPI.changeStatus(id)
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

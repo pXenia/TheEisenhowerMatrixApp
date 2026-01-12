@@ -91,7 +91,6 @@ fun EisenhowerMatrixScreen(
             }
         }
 
-        // Индикатор загрузки
         if (uiState.isLoading) {
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center),
@@ -99,7 +98,6 @@ fun EisenhowerMatrixScreen(
             )
         }
 
-        // Сообщение об ошибке
         uiState.error?.let { error ->
             Card(
                 modifier = Modifier
