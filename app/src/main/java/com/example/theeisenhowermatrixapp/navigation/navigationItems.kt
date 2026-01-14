@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.Star
 
 val navigationItems = listOf(
     NavigationItem(
@@ -12,7 +13,7 @@ val navigationItems = listOf(
         route = Screen.Matrix.route
     ),
     NavigationItem(
-        title = "Список задач",
+        title = "Задачи",
         icon = Icons.Default.Person,
         route = Screen.TasksList.route
     ),
@@ -20,6 +21,11 @@ val navigationItems = listOf(
         title = "Профиль",
         icon = Icons.Default.ShoppingCart,
         route = Screen.Profile.route
+    ),
+    NavigationItem(
+        title = "Статистика",
+        icon = Icons.Default.Star,
+        route = Screen.Stats.route
     ),
 )
 

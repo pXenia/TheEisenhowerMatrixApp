@@ -27,4 +27,37 @@ class AuthRepository @Inject constructor(
     fun isLoggedIn(): Flow<Boolean> {
         return tokenManager.getToken().map { it != null }
     }
+
+    suspend fun register(
+        nickname: String,
+        email: String,
+        password: String
+    ): Result<Unit> =
+        runCatching {
+            apiService.register(
+                RegisterRequest(
+                    nickname = nickname,
+                    email = email,
+                    password = password
+                )
+            )
+        }
+
+    suspend fun changePassword(
+        oldPassword: String,
+        newPassword: String
+    ): Result<Unit> =
+        runCatching {
+            apiService.changePassword(
+                ChangePasswordRequest(
+                    oldPassword = oldPassword,
+                    newPassword = newPassword
+                )
+            )
+        }
+
+    suspend fun getMe(): Result<UserProfile> =
+        runCatching {
+            apiService.getMe()
+        }
 }

@@ -1,31 +1,26 @@
 package com.example.theeisenhowermatrixapp.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.theeisenhowermatrixapp.auth.LoginScreen
 import com.example.theeisenhowermatrixapp.auth.RegisterScreen
 
 @Composable
-fun AppNavigation(
-    isAuthorized: Boolean
+fun AuthNavGraph(
+    navController: NavHostController
 ) {
-    val navController = rememberNavController()
-
     NavHost(
         navController = navController,
-        startDestination = if (isAuthorized)
-            Screen.Matrix.route
-        else
-            Screen.Login.route
+        startDestination = Screen.Login.route
     ) {
 
         composable(Screen.Login.route) {
             LoginScreen(
                 onLoginSuccess = {
                     navController.navigate(Screen.Matrix.route) {
-                        popUpTo(0)
+                        popUpTo(Screen.Login.route) { inclusive = true }
                     }
                 },
                 onRegisterClick = {
@@ -38,17 +33,13 @@ fun AppNavigation(
             RegisterScreen(
                 onRegisterSuccess = {
                     navController.navigate(Screen.Matrix.route) {
-                        popUpTo(0)
+                        popUpTo(Screen.Login.route) { inclusive = true }
                     }
                 },
                 onBackToLogin = {
                     navController.popBackStack()
                 }
             )
-        }
-
-        composable(Screen.Matrix.route) {
-            MainScreen()
         }
     }
 }

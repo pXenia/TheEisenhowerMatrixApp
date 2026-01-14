@@ -33,7 +33,7 @@ class MatrixViewModel @Inject constructor(
             loadAllTasks()
         }
     }
-    
+
     fun loadAllTasks() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }

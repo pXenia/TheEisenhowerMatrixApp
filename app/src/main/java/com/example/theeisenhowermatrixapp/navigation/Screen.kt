@@ -1,8 +1,11 @@
 package com.example.theeisenhowermatrixapp.navigation
 
 sealed class Screen(val route: String) {
-    object Login : Screen("login_screen")
-    object Matrix: Screen("matrix_screen")
-    object TasksList: Screen("tasks_list_screen")
-    object Profile: Screen("profile_screen")
+    object Login : Screen("login")
+    object Register : Screen("register")
+
+    object Matrix : Screen("matrix")
+    object TasksList : Screen("tasks")
+    object Profile : Screen("profile")
+    object Stats: Screen("stats")
 }

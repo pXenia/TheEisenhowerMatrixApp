@@ -1,6 +1,7 @@
 package com.example.theeisenhowermatrixapp.tasks.presentation.uicomponents
 
 import android.R.attr.thickness
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -28,17 +29,19 @@ fun Quadrant(
     containerColor: Color,
     title: String,
     titleColor: Color,
-    tasks: List<Task>
+    tasks: List<Task>,
+    onTaskCheckedChange: (Int) -> Unit
 ) {
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(containerColor = containerColor)
+        colors = CardDefaults.cardColors(containerColor = containerColor),
+        border = BorderStroke(1.dp, Color.Black)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(4.dp),
+                .padding(horizontal = 4.dp, vertical = 8.dp),
         ) {
             Text(
                 text = title,
@@ -58,16 +61,20 @@ fun Quadrant(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                items(tasks) { task ->
+                items(
+                    items = tasks,
+                    key = { it.id }
+                ) { task ->
                     TaskUIItem(
                         task = task,
                         isDone = task.completed,
                         doneColor = titleColor,
-                        onCheckedChange = {}
+                        onCheckedChange = {
+                            onTaskCheckedChange(task.id)
+                        }
                     )
                 }
             }
-
         }
     }
 }

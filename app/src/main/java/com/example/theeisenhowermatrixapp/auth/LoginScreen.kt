@@ -1,14 +1,19 @@
 package com.example.theeisenhowermatrixapp.auth
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.waterfall
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -21,7 +26,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -42,7 +49,8 @@ import com.example.theeisenhowermatrixapp.ui.theme.WhiteBackground
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
-    onLoginSuccess: () -> Unit
+    onLoginSuccess: () -> Unit,
+    onRegisterClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -52,12 +60,14 @@ fun LoginScreen(
             .background(GraySurface),
         contentAlignment = Alignment.Center
     ) {
-        Card(
+        Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(24.dp),
-            colors = CardDefaults.cardColors(containerColor = WhiteBackground),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                .padding(24.dp)
+                .align(Alignment.Center),
+            shape = RoundedCornerShape(20.dp),
+            color = Color.Transparent,
+            border = BorderStroke(1.dp, Color.Black)
         ) {
             Column(
                 modifier = Modifier.padding(24.dp),
@@ -67,14 +77,14 @@ fun LoginScreen(
                 Icon(
                     imageVector = Icons.Default.AccountCircle,
                     contentDescription = null,
-                    modifier = Modifier.size(80.dp),
+                    modifier = Modifier.size(90.dp),
                     tint = AccentBlue
                 )
 
                 Text(
                     text = "Вход в систему",
                     style = MaterialTheme.typography.headlineMedium,
-                    color = BlackText,
+                    color = AccentBlue,
                     fontWeight = FontWeight.Bold
                 )
 
@@ -83,6 +93,7 @@ fun LoginScreen(
                     onValueChange = viewModel::onUsernameChange,
                     label = { Text("Логин") },
                     modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(20),
                     singleLine = true,
                     enabled = !uiState.isLoading,
                     colors = OutlinedTextFieldDefaults.colors(
@@ -96,6 +107,7 @@ fun LoginScreen(
                     onValueChange = viewModel::onPasswordChange,
                     label = { Text("Пароль") },
                     modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(20),
                     singleLine = true,
                     enabled = !uiState.isLoading,
                     visualTransformation = PasswordVisualTransformation(),
@@ -117,13 +129,12 @@ fun LoginScreen(
 
                 Button(
                     onClick = { viewModel.login(onLoginSuccess) },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp),
+                    modifier = Modifier.fillMaxWidth().height(52.dp),
                     enabled = !uiState.isLoading,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = AccentBlue
-                    )
+                        containerColor = Color.Black,
+                    ),
+                    border = BorderStroke(1.dp, Color.Black)
                 ) {
                     if (uiState.isLoading) {
                         CircularProgressIndicator(
@@ -134,7 +145,16 @@ fun LoginScreen(
                         Text("Войти", fontSize = 16.sp)
                     }
                 }
+
             }
+        }
+        TextButton(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            onClick = onRegisterClick) {
+            Text(
+                text = "Нет аккаунта? Зарегистрироваться",
+                style = MaterialTheme.typography.bodyLarge
+            )
         }
     }
 }

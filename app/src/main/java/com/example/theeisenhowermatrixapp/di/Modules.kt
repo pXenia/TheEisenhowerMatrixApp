@@ -3,6 +3,8 @@ package com.example.theeisenhowermatrixapp.di
 import com.example.theeisenhowermatrixapp.auth.AuthAPI
 import com.example.theeisenhowermatrixapp.auth.AuthInterceptor
 import com.example.theeisenhowermatrixapp.auth.TokenManager
+import com.example.theeisenhowermatrixapp.stats.StatsAPI
+import com.example.theeisenhowermatrixapp.stats.StatsCard
 import com.example.theeisenhowermatrixapp.tasks.data.ToDoAPI
 import dagger.Module
 import dagger.Provides
@@ -20,6 +22,7 @@ import kotlin.jvm.java
 object NetworkModule {
 
     private const val BASE_URL = "http://10.0.2.2:8000/"
+    //private const val BASE_URL = "http://192.168.1.101:8000/"
 
     @Provides
     @Singleton
@@ -57,5 +60,11 @@ object NetworkModule {
     @Singleton
     fun provideAuthAPI(retrofit: Retrofit): AuthAPI {
         return retrofit.create(AuthAPI::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideStatsAPI(retrofit: Retrofit): StatsAPI {
+        return retrofit.create(StatsAPI::class.java)
     }
 }

@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.theeisenhowermatrixapp.stats.StatsScreen
 import com.example.theeisenhowermatrixapp.tasks.presentation.EisenhowerMatrixScreen
 import com.example.theeisenhowermatrixapp.tasks.presentation.TaskListScreen
 
@@ -26,6 +27,9 @@ fun NavigationHost(
         }
         composable(Screen.Profile.route) {
             ScreeTemp()
+        }
+        composable(Screen.Stats.route) {
+            StatsScreen()
         }
     }
 }

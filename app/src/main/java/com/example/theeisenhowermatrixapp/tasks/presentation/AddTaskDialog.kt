@@ -55,10 +55,10 @@ fun AddTaskDialog(
             "${selectedDate} ${selectedTime}"
         selectedDate != null ->
             selectedDate.toString()
-        else -> ""
+        else -> "Не выбран"
     }
 
-    // DATE PICKER
+    // -------- Date picker --------
     if (showDatePicker) {
         val datePickerState = rememberDatePickerState()
 
@@ -83,7 +83,7 @@ fun AddTaskDialog(
         }
     }
 
-    // TIME PICKER
+    // -------- Time picker --------
     if (showTimePicker) {
         val timePickerState = rememberTimePickerState()
 
@@ -111,11 +111,12 @@ fun AddTaskDialog(
         )
     }
 
+    // -------- Main dialog --------
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text("Новая задача") },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
 
                 OutlinedTextField(
                     value = title,
@@ -132,15 +133,23 @@ fun AddTaskDialog(
                     modifier = Modifier.fillMaxWidth()
                 )
 
+                // 🔹 Поле даты (НЕ кликабельно)
                 OutlinedTextField(
                     value = deadlineText,
                     onValueChange = {},
                     readOnly = true,
+                    enabled = false,
                     label = { Text("Срок") },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { showDatePicker = true }
+                    modifier = Modifier.fillMaxWidth()
                 )
+
+                // 🔹 Кнопка выбора даты
+                TextButton(
+                    onClick = { showDatePicker = true },
+                    modifier = Modifier.align(Alignment.End)
+                ) {
+                    Text("Выбрать дату")
+                }
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(
@@ -153,7 +162,9 @@ fun AddTaskDialog(
         },
         confirmButton = {
             TextButton(
-                enabled = title.isNotBlank() && selectedDate != null && selectedTime != null,
+                enabled = title.isNotBlank()
+                        && selectedDate != null
+                        && selectedTime != null,
                 onClick = {
                     onAddTask(
                         CreateTaskRequest(

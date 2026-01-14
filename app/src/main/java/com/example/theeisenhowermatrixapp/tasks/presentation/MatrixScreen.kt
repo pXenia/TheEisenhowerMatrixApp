@@ -57,7 +57,8 @@ fun EisenhowerMatrixScreen(
                     containerColor = QuadrantRed,
                     title = "Срочно и важно",
                     titleColor = QuadrantRedText,
-                    tasks = uiState.q1Tasks
+                    tasks = uiState.q1Tasks,
+                    onTaskCheckedChange = viewModel::changeStatus
                 )
 
                 Quadrant(
@@ -65,7 +66,8 @@ fun EisenhowerMatrixScreen(
                     containerColor = QuadrantGreen,
                     title = "Важно, не срочно",
                     titleColor = QuadrantGreenText,
-                    tasks = uiState.q2Tasks
+                    tasks = uiState.q2Tasks,
+                    onTaskCheckedChange = viewModel::changeStatus
                 )
             }
 
@@ -78,7 +80,8 @@ fun EisenhowerMatrixScreen(
                     containerColor = QuadrantYellow,
                     title = "Срочно, не важно",
                     titleColor = QuadrantYellowText,
-                    tasks = uiState.q3Tasks
+                    tasks = uiState.q3Tasks,
+                    onTaskCheckedChange = viewModel::changeStatus
                 )
 
                 Quadrant(
@@ -86,7 +89,8 @@ fun EisenhowerMatrixScreen(
                     containerColor = QuadrantNeutral,
                     title = "Не срочно, не важно",
                     titleColor = GrayTextSecondary,
-                    tasks = uiState.q4Tasks
+                    tasks = uiState.q4Tasks,
+                    onTaskCheckedChange = viewModel::changeStatus
                 )
             }
         }
