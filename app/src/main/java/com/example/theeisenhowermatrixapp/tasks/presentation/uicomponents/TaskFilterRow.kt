@@ -1,6 +1,7 @@
 package com.example.theeisenhowermatrixapp.tasks.presentation.uicomponents
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -72,6 +73,7 @@ private fun FilterBadge(
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(16.dp))
+            .border(1.dp, Color.Black, RoundedCornerShape(16.dp))
             .background(background)
             .clickable { onClick() }
             .padding(horizontal = 12.dp, vertical = 6.dp)

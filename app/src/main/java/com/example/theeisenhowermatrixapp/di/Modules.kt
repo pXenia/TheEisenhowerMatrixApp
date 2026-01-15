@@ -22,7 +22,7 @@ import kotlin.jvm.java
 object NetworkModule {
 
     private const val BASE_URL = "http://10.0.2.2:8000/"
-    //private const val BASE_URL = "http://192.168.1.101:8000/"
+    //private const val BASE_URL = "http://10.240.155.126:8000/"
 
     @Provides
     @Singleton

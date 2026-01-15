@@ -1,6 +1,5 @@
 package com.example.theeisenhowermatrixapp.tasks.presentation.uicomponents
 
-import android.R.attr.thickness
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.theeisenhowermatrixapp.tasks.data.Task
 
 @Composable
@@ -30,7 +28,8 @@ fun Quadrant(
     title: String,
     titleColor: Color,
     tasks: List<Task>,
-    onTaskCheckedChange: (Int) -> Unit
+    onTaskCheckedChange: (Int) -> Unit,
+    onTaskClick: (Task)-> Unit
 ) {
     Card(
         modifier = modifier,
@@ -71,7 +70,8 @@ fun Quadrant(
                         doneColor = titleColor,
                         onCheckedChange = {
                             onTaskCheckedChange(task.id)
-                        }
+                        },
+                        onClick = { onTaskClick(task) }
                     )
                 }
             }

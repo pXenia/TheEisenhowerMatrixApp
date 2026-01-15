@@ -26,9 +26,6 @@ fun NavigationHost(
             TaskListScreen()
         }
         composable(Screen.Profile.route) {
-            ScreeTemp()
-        }
-        composable(Screen.Stats.route) {
             StatsScreen()
         }
     }

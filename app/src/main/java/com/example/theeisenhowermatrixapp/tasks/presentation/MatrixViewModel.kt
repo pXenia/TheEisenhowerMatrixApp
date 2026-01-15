@@ -1,5 +1,7 @@
 package com.example.theeisenhowermatrixapp.tasks.presentation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.theeisenhowermatrixapp.auth.AuthRepository
@@ -13,6 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.Instant
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +32,6 @@ class MatrixViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            authRepository.login("ksn@example.com", "111111")
             loadAllTasks()
         }
     }
@@ -40,8 +42,9 @@ class MatrixViewModel @Inject constructor(
 
             repository.getAllTasks()
                 .onSuccess { tasks ->
-                    _allTasks.value = tasks
-                    updateQuadrants(tasks)
+                    val sorted = sortTasks(tasks)
+                    _allTasks.value = sorted
+                    updateQuadrants(sorted)
                     _uiState.update { it.copy(isLoading = false) }
                 }
                 .onFailure { e ->
@@ -63,7 +66,7 @@ class MatrixViewModel @Inject constructor(
         viewModelScope.launch {
             repository.createTask(request)
                 .onSuccess { newTask ->
-                    val updated = listOf(newTask) + _allTasks.value
+                    val updated = sortTasks(listOf(newTask) + _allTasks.value)
                     _allTasks.value = updated
                     updateQuadrants(updated)
                 }
@@ -76,7 +79,9 @@ class MatrixViewModel @Inject constructor(
     fun deleteTask(id: Int) {
         viewModelScope.launch {
 
-            val updated = _allTasks.value.filterNot { it.id == id }
+            val updated = sortTasks(
+                _allTasks.value.filterNot { it.id == id }
+            )
             _allTasks.value = updated
             updateQuadrants(updated)
 
@@ -87,19 +92,24 @@ class MatrixViewModel @Inject constructor(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun changeStatus(id: Int) {
         viewModelScope.launch {
 
             val updated = _allTasks.value.map { task ->
                 if (task.id == id) {
-                    task.copy(completed = !task.completed)
-                } else {
-                    task
-                }
+                    task.copy(
+                        completed = !task.completed,
+                        completedAt = if (!task.completed)
+                            Instant.now().toString()
+                        else null
+                    )
+                } else task
             }
 
-            _allTasks.value = updated
-            updateQuadrants(updated)
+            val sorted = sortTasks(updated)
+            _allTasks.value = sorted
+            updateQuadrants(sorted)
 
             repository.changeStatus(id)
                 .onFailure { e ->
@@ -107,6 +117,36 @@ class MatrixViewModel @Inject constructor(
                 }
         }
     }
+
+    fun updateTask(id: Int, request: CreateTaskRequest) {
+        viewModelScope.launch {
+            repository.updateTask(id, request)
+                .onSuccess { updatedTask ->
+                    val updated = _allTasks.value.map { task ->
+                        if (task.id == id) updatedTask else task
+                    }
+                    val sorted = sortTasks(updated)
+                    _allTasks.value = sorted
+                    updateQuadrants(sorted)
+                }
+                .onFailure { e ->
+                    _uiState.update { it.copy(error = e.message) }
+                }
+        }
+    }
+
+    private fun sortTasks(tasks: List<Task>): List<Task> {
+        val activeTasks = tasks
+            .filter { !it.completed }
+
+        val completedTasks = tasks
+            .filter { it.completed }
+            .sortedByDescending { it.completedAt }
+
+        return activeTasks + completedTasks
+    }
+
+
     private fun updateQuadrants(tasks: List<Task>) {
         _uiState.update {
             it.copy(

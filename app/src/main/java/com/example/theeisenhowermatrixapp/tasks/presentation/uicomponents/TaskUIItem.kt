@@ -1,6 +1,7 @@
 package com.example.theeisenhowermatrixapp.tasks.presentation.uicomponents
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,11 +25,12 @@ import com.example.theeisenhowermatrixapp.tasks.data.Task
 fun TaskUIItem(
     task: Task,
     isDone: Boolean,
+    onClick: () -> Unit,
     onCheckedChange: (Boolean) -> Unit,
     doneColor: Color,
 ) {
     Surface(
-        modifier = Modifier.padding(horizontal = 4.dp),
+        modifier = Modifier.padding(horizontal = 4.dp).clickable{ onClick() },
         color = Color.Transparent,
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(1.dp, doneColor.copy(alpha = 0.3f))

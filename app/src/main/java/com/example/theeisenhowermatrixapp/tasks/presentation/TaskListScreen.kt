@@ -3,6 +3,7 @@ package com.example.theeisenhowermatrixapp.tasks.presentation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.CircularProgressIndicator
@@ -32,6 +34,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.theeisenhowermatrixapp.tasks.data.Task
 import com.example.theeisenhowermatrixapp.tasks.presentation.uicomponents.EmptyTasksPlaceholder
 import com.example.theeisenhowermatrixapp.tasks.presentation.uicomponents.ErrorCard
 import com.example.theeisenhowermatrixapp.tasks.presentation.uicomponents.TaskFilterRow
@@ -49,6 +53,7 @@ fun TaskListScreen(
 ) {
     val allTasks by viewModel.allTasks.collectAsState()
     val uiState by viewModel.uiState.collectAsState()
+    var taskToEdit by remember { mutableStateOf<Task?>(null) }
 
     var selectedFilter by remember { mutableStateOf(TaskFilter.ALL) }
     var showAddDialog by remember { mutableStateOf(false) }
@@ -96,32 +101,41 @@ fun TaskListScreen(
                     items(filteredTasks, key = { it.id }) { task ->
                         TaskItem(
                             task = task,
-                            onDeleteClick = { viewModel.deleteTask(task.id) },
-                            onCheckedChange = {viewModel.changeStatus(task.id)}
+                            onClick = { taskToEdit = task },
+                                    onDeleteClick = { viewModel.deleteTask(task.id) },
+                            onCheckedChange = {viewModel.changeStatus(task.id)},
+                            isDone = task.completed
                         )
                     }
                 }
             }
         }
 
-        // FAB
         FloatingActionButton(
             onClick = { showAddDialog = true },
-            containerColor = AccentBlue,
-            contentColor = Color.White,
+            containerColor = Color.White,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(16.dp)
+                .border(1.dp, Color.Black, RoundedCornerShape(14.dp))
         ) {
             Icon(Icons.Default.Add, contentDescription = "Добавить задачу")
         }
 
-        if (showAddDialog) {
+        if (showAddDialog || taskToEdit != null) {
             AddTaskDialog(
-                onDismiss = { showAddDialog = false },
+                taskToEdit = taskToEdit,
+                onDismiss = {
+                    showAddDialog = false
+                    taskToEdit = null
+                },
                 onAddTask = { task ->
                     viewModel.addTask(task)
                     showAddDialog = false
+                },
+                onUpdateTask = { id, request ->
+                    viewModel.updateTask(id, request)
+                    taskToEdit = null
                 }
             )
         }

@@ -46,6 +46,11 @@ class StatsViewModel @Inject constructor(
         }
     }
 
+    fun logout(){
+        viewModelScope.launch {
+            authRepository.logout()
+        }
+    }
 
     fun loadStats() {
         viewModelScope.launch {

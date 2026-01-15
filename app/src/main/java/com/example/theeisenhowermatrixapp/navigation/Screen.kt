@@ -7,5 +7,4 @@ sealed class Screen(val route: String) {
     object Matrix : Screen("matrix")
     object TasksList : Screen("tasks")
     object Profile : Screen("profile")
-    object Stats: Screen("stats")
 }

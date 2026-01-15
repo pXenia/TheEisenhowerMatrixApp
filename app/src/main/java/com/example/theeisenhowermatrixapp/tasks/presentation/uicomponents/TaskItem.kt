@@ -1,6 +1,9 @@
 package com.example.theeisenhowermatrixapp.tasks.presentation.uicomponents
 
+import android.R.attr.onClick
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +19,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,12 +51,14 @@ import com.example.theeisenhowermatrixapp.ui.theme.Warning
 @Composable
 fun TaskItem(
     task: Task,
+    onClick: () -> Unit,
     onCheckedChange: (Boolean) -> Unit,
+    isDone: Boolean,
     onDeleteClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().clickable { onClick() },
         colors = CardDefaults.cardColors(
             containerColor = taskContainerColor(task)
         ),
@@ -61,7 +68,10 @@ fun TaskItem(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(
                     checked = task.completed,
-                    onCheckedChange = onCheckedChange
+                    onCheckedChange = onCheckedChange,
+                    colors = CheckboxDefaults.colors(
+                        uncheckedColor = Color.Black
+                    )
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -70,7 +80,11 @@ fun TaskItem(
                     text = task.title,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    textDecoration = if (isDone)
+                        TextDecoration.LineThrough
+                    else
+                        TextDecoration.None
                 )
 
                 IconButton(onClick = onDeleteClick) {

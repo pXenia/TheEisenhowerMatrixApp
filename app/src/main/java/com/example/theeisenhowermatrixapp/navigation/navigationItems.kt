@@ -5,27 +5,25 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.outlined.Person
 
 val navigationItems = listOf(
     NavigationItem(
         title = "Матрица",
-        icon = Icons.Default.Home,
+        icon = Icons.Outlined.CheckCircle,
         route = Screen.Matrix.route
     ),
     NavigationItem(
         title = "Задачи",
-        icon = Icons.Default.Person,
+        icon = Icons.Outlined.List,
         route = Screen.TasksList.route
     ),
     NavigationItem(
         title = "Профиль",
-        icon = Icons.Default.ShoppingCart,
+        icon = Icons.Outlined.Person,
         route = Screen.Profile.route
-    ),
-    NavigationItem(
-        title = "Статистика",
-        icon = Icons.Default.Star,
-        route = Screen.Stats.route
-    ),
+    )
 )
 

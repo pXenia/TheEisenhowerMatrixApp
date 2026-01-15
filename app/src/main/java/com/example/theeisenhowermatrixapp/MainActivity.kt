@@ -36,10 +36,9 @@ class MainActivity : ComponentActivity() {
                 .collectAsState(initial = null)
 
             TheEisenhowerMatrixAppTheme {
-//                AppNavigation(
-//                    isAuthorized = token != null
-//                )
-                MainScreen()
+                AppNavigation(
+                    isAuthorized = token != null
+                )
             }
         }
     }

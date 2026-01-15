@@ -6,6 +6,7 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -33,4 +34,10 @@ interface ToDoAPI {
     suspend fun changeStatus(
         @Path("id") id: Int
     )
+
+    @PUT("api/v3/tasks/{id}")
+    suspend fun updateTask(
+        @Path("id") id: Int,
+        @Body request: CreateTaskRequest
+    ): Task
 }

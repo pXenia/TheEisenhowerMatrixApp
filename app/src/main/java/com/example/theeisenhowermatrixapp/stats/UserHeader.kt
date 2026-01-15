@@ -21,6 +21,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -35,7 +36,8 @@ import com.example.theeisenhowermatrixapp.ui.theme.QuadrantRedText
 fun UserHeader(
     username: String,
     email: String,
-    onChangePasswordClick: () -> Unit
+    onChangePasswordClick: () -> Unit,
+    logout: () -> Unit
 ) {
     Surface(
         shape = RoundedCornerShape(20.dp),
@@ -45,7 +47,8 @@ fun UserHeader(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Icon(
                 imageVector = Icons.Default.AccountCircle,
@@ -55,11 +58,13 @@ fun UserHeader(
             )
 
             Column(
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+                modifier = Modifier.align(Alignment.CenterVertically),
+                verticalArrangement = Arrangement.Center
             ) {
                 Text(username, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                 Text(email, color = GrayTextSecondary)
             }
+
         }
     }
 
@@ -77,7 +82,7 @@ fun UserHeader(
 
     Button(
         modifier = Modifier.fillMaxWidth().height(52.dp),
-        onClick = onChangePasswordClick,
+        onClick = logout,
         colors = ButtonDefaults.buttonColors(
             containerColor = QuadrantRed,
             contentColor = QuadrantRedText

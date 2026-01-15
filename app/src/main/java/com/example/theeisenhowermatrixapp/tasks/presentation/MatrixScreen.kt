@@ -1,5 +1,7 @@
 package com.example.theeisenhowermatrixapp.tasks.presentation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +18,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.example.theeisenhowermatrixapp.tasks.data.Task
 import com.example.theeisenhowermatrixapp.tasks.presentation.uicomponents.Quadrant
 import com.example.theeisenhowermatrixapp.ui.theme.AccentBlue
 import com.example.theeisenhowermatrixapp.ui.theme.GrayTextSecondary
@@ -34,12 +40,15 @@ import com.example.theeisenhowermatrixapp.ui.theme.QuadrantRedText
 import com.example.theeisenhowermatrixapp.ui.theme.QuadrantYellow
 import com.example.theeisenhowermatrixapp.ui.theme.QuadrantYellowText
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun EisenhowerMatrixScreen(
     viewModel: MatrixViewModel = hiltViewModel(),
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    var taskToEdit by remember { mutableStateOf<Task?>(null) }
+    var showAddDialog by remember { mutableStateOf(false) }
 
     Box(modifier = modifier.fillMaxSize()) {
         Column(
@@ -58,7 +67,9 @@ fun EisenhowerMatrixScreen(
                     title = "Срочно и важно",
                     titleColor = QuadrantRedText,
                     tasks = uiState.q1Tasks,
-                    onTaskCheckedChange = viewModel::changeStatus
+                    onTaskCheckedChange = viewModel::changeStatus,
+                    onTaskClick = { task -> taskToEdit = task }
+
                 )
 
                 Quadrant(
@@ -67,7 +78,8 @@ fun EisenhowerMatrixScreen(
                     title = "Важно, не срочно",
                     titleColor = QuadrantGreenText,
                     tasks = uiState.q2Tasks,
-                    onTaskCheckedChange = viewModel::changeStatus
+                    onTaskCheckedChange = viewModel::changeStatus,
+                    onTaskClick = { task -> taskToEdit = task }
                 )
             }
 
@@ -81,7 +93,8 @@ fun EisenhowerMatrixScreen(
                     title = "Срочно, не важно",
                     titleColor = QuadrantYellowText,
                     tasks = uiState.q3Tasks,
-                    onTaskCheckedChange = viewModel::changeStatus
+                    onTaskCheckedChange = viewModel::changeStatus,
+                    onTaskClick = { task -> taskToEdit = task }
                 )
 
                 Quadrant(
@@ -90,7 +103,8 @@ fun EisenhowerMatrixScreen(
                     title = "Не срочно, не важно",
                     titleColor = GrayTextSecondary,
                     tasks = uiState.q4Tasks,
-                    onTaskCheckedChange = viewModel::changeStatus
+                    onTaskCheckedChange = viewModel::changeStatus,
+                    onTaskClick = { task -> taskToEdit = task }
                 )
             }
         }
@@ -99,6 +113,24 @@ fun EisenhowerMatrixScreen(
             CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center),
                 color = AccentBlue
+            )
+        }
+
+        if (showAddDialog || taskToEdit != null) {
+            AddTaskDialog(
+                taskToEdit = taskToEdit,
+                onDismiss = {
+                    showAddDialog = false
+                    taskToEdit = null
+                },
+                onAddTask = { task ->
+                    viewModel.addTask(task)
+                    showAddDialog = false
+                },
+                onUpdateTask = { id, request ->
+                    viewModel.updateTask(id, request)
+                    taskToEdit = null
+                }
             )
         }
 
