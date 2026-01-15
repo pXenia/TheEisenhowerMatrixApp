@@ -1,12 +1,15 @@
-package com.example.theeisenhowermatrixapp.auth
+package com.example.theeisenhowermatrixapp.auth.data
 
+import com.example.theeisenhowermatrixapp.auth.domain.ChangePasswordRequest
+import com.example.theeisenhowermatrixapp.auth.domain.LoginResponse
+import com.example.theeisenhowermatrixapp.auth.domain.RegisterRequest
+import com.example.theeisenhowermatrixapp.auth.domain.UserProfile
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
-
 
 interface AuthAPI {
     @FormUrlEncoded

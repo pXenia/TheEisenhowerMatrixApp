@@ -1,4 +1,4 @@
-package com.example.theeisenhowermatrixapp.tasks.data
+package com.example.theeisenhowermatrixapp.tasks.domain
 
 import com.google.gson.annotations.SerializedName
 

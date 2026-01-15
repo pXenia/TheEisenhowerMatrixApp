@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.theeisenhowermatrixapp.tasks.data.Task
+import com.example.theeisenhowermatrixapp.tasks.domain.Task
 
 @Composable
 fun TaskUIItem(

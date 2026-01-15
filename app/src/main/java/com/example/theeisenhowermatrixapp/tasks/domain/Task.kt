@@ -1,4 +1,4 @@
-package com.example.theeisenhowermatrixapp.tasks.data
+package com.example.theeisenhowermatrixapp.tasks.domain
 
 import com.google.gson.annotations.SerializedName
 
@@ -10,7 +10,7 @@ data class Task(
     val isImportant: Boolean,
     @SerializedName("is_urgent")
     val isUrgent: Boolean,
-    val quadrant: String, // Q1, Q2, Q3, Q4
+    val quadrant: String,
     val completed: Boolean,
     @SerializedName("deadline_at")
     val deadlineAt: String?,

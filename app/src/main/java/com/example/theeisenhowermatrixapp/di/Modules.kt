@@ -1,10 +1,9 @@
 package com.example.theeisenhowermatrixapp.di
 
-import com.example.theeisenhowermatrixapp.auth.AuthAPI
-import com.example.theeisenhowermatrixapp.auth.AuthInterceptor
-import com.example.theeisenhowermatrixapp.auth.TokenManager
-import com.example.theeisenhowermatrixapp.stats.StatsAPI
-import com.example.theeisenhowermatrixapp.stats.StatsCard
+import com.example.theeisenhowermatrixapp.auth.data.AuthAPI
+import com.example.theeisenhowermatrixapp.auth.data.AuthInterceptor
+import com.example.theeisenhowermatrixapp.auth.data.TokenManager
+import com.example.theeisenhowermatrixapp.stats.data.StatsAPI
 import com.example.theeisenhowermatrixapp.tasks.data.ToDoAPI
 import dagger.Module
 import dagger.Provides
@@ -15,14 +14,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
-import kotlin.jvm.java
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL = "http://10.0.2.2:8000/"
-    //private const val BASE_URL = "http://10.240.155.126:8000/"
+    // private const val BASE_URL = "http://10.0.2.2:8000/" // для эмулятора
+    private const val BASE_URL = "http://10.240.155.126:8000/" // для устройства
 
     @Provides
     @Singleton

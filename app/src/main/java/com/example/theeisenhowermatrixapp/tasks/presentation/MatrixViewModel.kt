@@ -4,12 +4,11 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.theeisenhowermatrixapp.auth.AuthRepository
-import com.example.theeisenhowermatrixapp.tasks.data.CreateTaskRequest
-import com.example.theeisenhowermatrixapp.tasks.data.Task
+import com.example.theeisenhowermatrixapp.auth.data.AuthRepository
 import com.example.theeisenhowermatrixapp.tasks.data.TaskRepository
+import com.example.theeisenhowermatrixapp.tasks.domain.CreateTaskRequest
+import com.example.theeisenhowermatrixapp.tasks.domain.Task
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,7 +20,6 @@ import javax.inject.Inject
 @HiltViewModel
 class MatrixViewModel @Inject constructor(
     private val repository: TaskRepository,
-    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MatrixUiState())
@@ -138,6 +136,7 @@ class MatrixViewModel @Inject constructor(
     private fun sortTasks(tasks: List<Task>): List<Task> {
         val activeTasks = tasks
             .filter { !it.completed }
+            .sortedBy { it.deadlineAt}
 
         val completedTasks = tasks
             .filter { it.completed }

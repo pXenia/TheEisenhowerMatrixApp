@@ -1,8 +1,9 @@
-package com.example.theeisenhowermatrixapp.stats
+package com.example.theeisenhowermatrixapp.stats.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.theeisenhowermatrixapp.auth.AuthRepository
+import com.example.theeisenhowermatrixapp.auth.data.AuthRepository
+import com.example.theeisenhowermatrixapp.stats.data.StatsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -99,4 +100,3 @@ class StatsViewModel @Inject constructor(
         _uiState.update { it.copy(passwordChanged = false) }
     }
 }
-

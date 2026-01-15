@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -34,14 +33,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.theeisenhowermatrixapp.tasks.data.Task
+import com.example.theeisenhowermatrixapp.tasks.domain.Task
 import com.example.theeisenhowermatrixapp.tasks.presentation.uicomponents.EmptyTasksPlaceholder
 import com.example.theeisenhowermatrixapp.tasks.presentation.uicomponents.ErrorCard
 import com.example.theeisenhowermatrixapp.tasks.presentation.uicomponents.TaskFilterRow
 import com.example.theeisenhowermatrixapp.tasks.presentation.uicomponents.TaskItem
 import com.example.theeisenhowermatrixapp.tasks.presentation.util.TaskFilter
-import com.example.theeisenhowermatrixapp.ui.theme.AccentBlue
 import com.example.theeisenhowermatrixapp.ui.theme.BlackText
 import com.example.theeisenhowermatrixapp.ui.theme.WhiteBackground
 

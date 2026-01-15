@@ -1,4 +1,4 @@
-package com.example.theeisenhowermatrixapp.stats
+package com.example.theeisenhowermatrixapp.stats.domain
 
 import com.google.gson.annotations.SerializedName
 

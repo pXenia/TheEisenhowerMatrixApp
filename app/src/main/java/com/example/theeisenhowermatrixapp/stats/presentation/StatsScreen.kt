@@ -1,4 +1,4 @@
-package com.example.theeisenhowermatrixapp.stats
+package com.example.theeisenhowermatrixapp.stats.presentation
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -23,16 +22,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.theeisenhowermatrixapp.auth.ChangePasswordDialog
+import com.example.theeisenhowermatrixapp.auth.presentation.ChangePasswordDialog
 import com.example.theeisenhowermatrixapp.ui.theme.GrayTextSecondary
 import com.example.theeisenhowermatrixapp.ui.theme.QuadrantGreenText
 import com.example.theeisenhowermatrixapp.ui.theme.QuadrantRedText
@@ -45,6 +43,10 @@ fun StatsScreen(
     val uiState by viewModel.uiState.collectAsState()
     var showChangePassword by remember { mutableStateOf(false) }
 
+    LaunchedEffect(Unit) {
+        viewModel.loadStats()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -56,9 +58,8 @@ fun StatsScreen(
         UserHeader(
             username = uiState.username,
             email = uiState.email,
-            onChangePasswordClick = { showChangePassword = true},
-            logout = {viewModel.logout()}
-        )
+            onChangePasswordClick = { showChangePassword = true },
+            logout = { viewModel.logout() })
 
         Spacer(Modifier.height(16.dp))
 
@@ -99,8 +100,7 @@ fun StatsScreen(
             onDismiss = { showChangePassword = false },
             onConfirm = { old, new ->
                 viewModel.changePassword(old, new)
-            }
-        )
+            })
     }
 
     if (uiState.passwordChanged) {
@@ -120,7 +120,9 @@ fun StatsCard(title: String, value: String) {
         border = BorderStroke(1.dp, Color.Black)
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -133,8 +135,7 @@ fun StatsCard(title: String, value: String) {
 @Composable
 fun StatsRow(label: String, value: Int) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(label)
         Text(value.toString(), fontWeight = FontWeight.Bold)
@@ -144,8 +145,7 @@ fun StatsRow(label: String, value: Int) {
 @Composable
 fun QuadrantStat(title: String, value: Int, color: Color) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(title, color = color)
         Text(value.toString(), fontWeight = FontWeight.Bold)

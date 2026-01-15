@@ -1,18 +1,18 @@
-package com.example.theeisenhowermatrixapp.auth
+package com.example.theeisenhowermatrixapp.auth.presentation
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.captionBarPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -23,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -31,10 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.theeisenhowermatrixapp.ui.theme.AccentBlue
-import com.example.theeisenhowermatrixapp.ui.theme.QuadrantRed
-import com.example.theeisenhowermatrixapp.ui.theme.QuadrantRedText
-import com.example.theeisenhowermatrixapp.ui.theme.WhiteBackground
-import java.nio.file.WatchEvent
 
 @Composable
 fun RegisterScreen(
@@ -44,7 +41,7 @@ fun RegisterScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize().navigationBarsPadding()
     ) {
         Surface(
             modifier = Modifier
@@ -81,7 +78,7 @@ fun RegisterScreen(
                     value = uiState.email,
                     onValueChange = viewModel::onEmailChange,
                     shape = RoundedCornerShape(20),
-                    label = { Text("Email") },
+                    label = { Text("Эл. почта") },
                     modifier = Modifier.fillMaxWidth()
                 )
 
@@ -109,7 +106,9 @@ fun RegisterScreen(
 
                 Button(
                     onClick = { viewModel.register(onRegisterSuccess) },
-                    modifier = Modifier.fillMaxWidth().height(52.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(52.dp),
                     enabled = !uiState.isLoading,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Black
@@ -122,12 +121,10 @@ fun RegisterScreen(
         }
 
         TextButton(
-            modifier = Modifier
-                .align(Alignment.BottomCenter),
-            onClick = onBackToLogin) {
+            modifier = Modifier.align(Alignment.BottomCenter), onClick = onBackToLogin
+        ) {
             Text(
-                text = "Уже есть аккаунт? Войти",
-                style = MaterialTheme.typography.bodyLarge
+                text = "Уже есть аккаунт? Войти", style = MaterialTheme.typography.bodyLarge
             )
         }
     }

@@ -1,12 +1,9 @@
-package com.example.theeisenhowermatrixapp.stats
+package com.example.theeisenhowermatrixapp.stats.presentation
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -34,10 +30,7 @@ import com.example.theeisenhowermatrixapp.ui.theme.QuadrantRedText
 
 @Composable
 fun UserHeader(
-    username: String,
-    email: String,
-    onChangePasswordClick: () -> Unit,
-    logout: () -> Unit
+    username: String, email: String, onChangePasswordClick: () -> Unit, logout: () -> Unit
 ) {
     Surface(
         shape = RoundedCornerShape(20.dp),
@@ -69,11 +62,12 @@ fun UserHeader(
     }
 
     Button(
-        modifier = Modifier.fillMaxWidth().height(52.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(52.dp),
         onClick = onChangePasswordClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Black,
-            contentColor = Color.White
+            containerColor = Color.Black, contentColor = Color.White
         ),
         border = BorderStroke(1.dp, Color.Black)
     ) {
@@ -81,11 +75,12 @@ fun UserHeader(
     }
 
     Button(
-        modifier = Modifier.fillMaxWidth().height(52.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(52.dp),
         onClick = logout,
         colors = ButtonDefaults.buttonColors(
-            containerColor = QuadrantRed,
-            contentColor = QuadrantRedText
+            containerColor = QuadrantRed, contentColor = QuadrantRedText
         ),
         border = BorderStroke(1.dp, Color.Black)
     ) {

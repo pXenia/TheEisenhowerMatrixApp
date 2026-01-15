@@ -1,26 +1,23 @@
-package com.example.theeisenhowermatrixapp.auth
+package com.example.theeisenhowermatrixapp.auth.presentation
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.captionBarPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.waterfall
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -44,7 +41,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.theeisenhowermatrixapp.ui.theme.AccentBlue
 import com.example.theeisenhowermatrixapp.ui.theme.BlackText
 import com.example.theeisenhowermatrixapp.ui.theme.GraySurface
-import com.example.theeisenhowermatrixapp.ui.theme.WhiteBackground
 
 @Composable
 fun LoginScreen(
@@ -57,6 +53,7 @@ fun LoginScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .navigationBarsPadding()
             .background(GraySurface),
         contentAlignment = Alignment.Center
     ) {
@@ -91,14 +88,13 @@ fun LoginScreen(
                 OutlinedTextField(
                     value = uiState.username,
                     onValueChange = viewModel::onUsernameChange,
-                    label = { Text("Логин") },
+                    label = { Text("Эл. почта") },
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(20),
                     singleLine = true,
                     enabled = !uiState.isLoading,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = AccentBlue,
-                        focusedLabelColor = AccentBlue
+                        focusedBorderColor = AccentBlue, focusedLabelColor = AccentBlue
                     )
                 )
 
@@ -113,8 +109,7 @@ fun LoginScreen(
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = AccentBlue,
-                        focusedLabelColor = AccentBlue
+                        focusedBorderColor = AccentBlue, focusedLabelColor = AccentBlue
                     )
                 )
 
@@ -129,7 +124,9 @@ fun LoginScreen(
 
                 Button(
                     onClick = { viewModel.login(onLoginSuccess) },
-                    modifier = Modifier.fillMaxWidth().height(52.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(52.dp),
                     enabled = !uiState.isLoading,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Black,
@@ -138,8 +135,7 @@ fun LoginScreen(
                 ) {
                     if (uiState.isLoading) {
                         CircularProgressIndicator(
-                            modifier = Modifier.size(24.dp),
-                            color = Color.White
+                            modifier = Modifier.size(24.dp), color = Color.White
                         )
                     } else {
                         Text("Войти", fontSize = 16.sp)
@@ -149,8 +145,8 @@ fun LoginScreen(
             }
         }
         TextButton(
-            modifier = Modifier.align(Alignment.BottomCenter),
-            onClick = onRegisterClick) {
+            modifier = Modifier.align(Alignment.BottomCenter), onClick = onRegisterClick
+        ) {
             Text(
                 text = "Нет аккаунта? Зарегистрироваться",
                 style = MaterialTheme.typography.bodyLarge

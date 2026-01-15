@@ -1,4 +1,4 @@
-package com.example.theeisenhowermatrixapp.auth
+package com.example.theeisenhowermatrixapp.auth.domain
 
 import com.google.gson.annotations.SerializedName
 

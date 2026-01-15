@@ -1,5 +1,7 @@
-package com.example.theeisenhowermatrixapp.stats
+package com.example.theeisenhowermatrixapp.stats.data
 
+import com.example.theeisenhowermatrixapp.stats.domain.TaskStatsResponse
+import com.example.theeisenhowermatrixapp.stats.domain.TimingStatsResponse
 import retrofit2.http.GET
 
 interface StatsAPI {

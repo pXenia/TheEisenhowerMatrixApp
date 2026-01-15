@@ -1,4 +1,4 @@
-package com.example.theeisenhowermatrixapp.auth
+package com.example.theeisenhowermatrixapp.auth.data
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-
+// Хранение токена в DataStore
 class TokenManager @Inject constructor(
     @ApplicationContext private val context: Context
 ) {

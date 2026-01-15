@@ -1,6 +1,7 @@
 package com.example.theeisenhowermatrixapp.tasks.data
 
-import com.example.theeisenhowermatrixapp.tasks.data.CreateTaskRequest
+import com.example.theeisenhowermatrixapp.tasks.domain.CreateTaskRequest
+import com.example.theeisenhowermatrixapp.tasks.domain.Task
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -8,7 +9,6 @@ import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 
 interface ToDoAPI {

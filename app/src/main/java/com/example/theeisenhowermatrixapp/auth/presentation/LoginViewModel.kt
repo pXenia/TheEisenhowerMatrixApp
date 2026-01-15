@@ -1,7 +1,9 @@
-package com.example.theeisenhowermatrixapp.auth
+package com.example.theeisenhowermatrixapp.auth.presentation
 
+import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.theeisenhowermatrixapp.auth.data.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -10,7 +12,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-// LoginViewModel.kt
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository
@@ -28,16 +29,13 @@ class LoginViewModel @Inject constructor(
     }
 
     fun login(onSuccess: () -> Unit) {
-        val username = _uiState.value.username
+        val username = _uiState.value.username.trim()
         val password = _uiState.value.password
 
-        if (username.isBlank() || password.isBlank()) {
-            _uiState.update { it.copy(error = "Заполните все поля") }
-            return
-        }
-
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = null) }
+            _uiState.update {
+                it.copy(isLoading = true, error = null)
+            }
 
             val result = authRepository.login(username, password)
 
@@ -47,7 +45,12 @@ class LoginViewModel @Inject constructor(
                 onSuccess()
             }.onFailure { error ->
                 _uiState.update {
-                    it.copy(error = error.message ?: "Ошибка авторизации")
+                    it.copy(
+                        error = when {
+                            error.message?.contains("401") == true -> "Неверный email или пароль"
+                            else -> error.message ?: "Ошибка авторизации"
+                        }
+                    )
                 }
             }
         }

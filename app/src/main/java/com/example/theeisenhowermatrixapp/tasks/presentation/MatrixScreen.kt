@@ -16,6 +16,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,7 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.example.theeisenhowermatrixapp.tasks.data.Task
+import com.example.theeisenhowermatrixapp.tasks.domain.Task
 import com.example.theeisenhowermatrixapp.tasks.presentation.uicomponents.Quadrant
 import com.example.theeisenhowermatrixapp.ui.theme.AccentBlue
 import com.example.theeisenhowermatrixapp.ui.theme.GrayTextSecondary
@@ -49,6 +50,10 @@ fun EisenhowerMatrixScreen(
     val uiState by viewModel.uiState.collectAsState()
     var taskToEdit by remember { mutableStateOf<Task?>(null) }
     var showAddDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        viewModel.loadAllTasks()
+    }
 
     Box(modifier = modifier.fillMaxSize()) {
         Column(

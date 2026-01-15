@@ -1,4 +1,4 @@
-package com.example.theeisenhowermatrixapp.auth
+package com.example.theeisenhowermatrixapp.auth.presentation
 
 data class LoginUiState(
     val username: String = "",
